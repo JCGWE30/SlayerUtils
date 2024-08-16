@@ -1,0 +1,27 @@
+name: Slayerutils
+version: '${project.version}'
+main: slayerutils.slayerutils.Slayerutils
+api-version: 1.20
+commands:
+  openinventory:
+    usage: /open
+    description: open
+  togglestructuresaving:
+    usage: /togglestructuresaving
+    description: togglestructuresaving
+  togglecornersaving:
+    usage: /togglecornersaving
+    description: togglecornersaving
+  loadstructure:
+    usage: /loadstructure
+    description: loadstructure
+  unloadstructure:
+    usage: /unloadstructure
+    description: unloadstructure
+  savestructure:
+    usage: /savestructure
+    description: savestructure
+  disableplugin:
+    usage: /disableplugin
+    description: disableplugin
+
