@@ -16,6 +16,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>Spigot SlayerUtils</name>
+            <url>https://maven.pkg.github.com/JCGWE30/SlayerUtils</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
