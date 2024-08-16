@@ -26,6 +26,6 @@ jobs:
         run: mvn clean install
 
       - name: Publish to GitHub Packages
-        run: mvn deploy
+        run: mvn clean deploy -Dmaven. resolver. transport=wagon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is automatically provided by GitHub Actions
