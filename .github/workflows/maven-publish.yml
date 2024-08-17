@@ -27,7 +27,7 @@ jobs:
       run: |
         current_version=$(cat $FILE_PATH)
 
-        if [[ -z "$current_version"]]; then
+        if [[ -z "$current_version" ]]; then
           echo "Current version empty. Setting to 1.0"
           new_version="1.0"
         else
