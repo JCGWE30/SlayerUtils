@@ -26,12 +26,21 @@ jobs:
     - name: Increment current version
       run: |
         current_version=$(cat $FILE_PATH)
-        echo "Current Version: $current_version"
 
-        new_version=$(echo "$current_version + 0.1" | bc)
+        if [[ -z "$current_version"]]; then
+          echo "Current version empty. Setting to 1.0"
+          new_version="1.0"
+        else
+          major_version=$(echo "$current_version" | cut -d '.' -f 1)
+          minor_version=$(echo "$current_version" | cut -d '.' -f 2)
+
+          new_minor_version=$(echo "$minor_version + 1" | bc)
+
+          new_version="$major_version.$new_minor_version"
+        fi
 
         echo "$new_version" > $FILE_PATH
-        echo "Updated Version: $new_version"
+        echo "New Version: $new_version"
     
     - name: Upload new version number
       uses: actions/upload-artifact@v3
@@ -119,3 +128,31 @@ jobs:
         asset_path: customutils-${{ env.VERSION }}.jar
         asset_name: customutils-${{ env.VERSION }}.jar
         asset_content_type: application/java-archive
+  
+  write_version:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Get version number
+      uses: actions/download-artifact@v3
+      with:
+        name: version-number
+    
+    - name: Set version number
+      run: |
+        VERSION=$(cat version.txt)
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+    
+    - name: Push new version number
+      run: |
+        git add $FILE_PATH
+        git commit -m "Update version number"
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
