@@ -73,7 +73,7 @@ jobs:
         path: ./target/customutils-${{ env.VERSION }}.jar
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml -Dproject.version=${{ env.VERSION }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
@@ -104,7 +104,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref_name }}
-        release_name: "SlayerUtils {{ env.VERSION }}"
+        release_name: "SlayerUtils ${{ env.VERSION }}"
         body: |
           Automated release of the project.
         draft: false
