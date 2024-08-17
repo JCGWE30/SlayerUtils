@@ -141,11 +141,6 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: version-number
-    
-    - name: Set version number
-      run: |
-        VERSION=$(cat version.txt)
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Configure Git
       run: |
@@ -154,7 +149,7 @@ jobs:
     
     - name: Push new version number
       run: |
-        git add $FILE_PATH
+        git add ${{ env.FILE_PATH }}
         git commit -m "Update version number"
         git push origin main
       env:
