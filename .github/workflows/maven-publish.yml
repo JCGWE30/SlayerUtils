@@ -14,6 +14,7 @@ on:
 
 env:
   FILE_PATH: ".github/version.txt"
+  FILE_NAME: "version.txt"
 
 jobs:
   update-version:
@@ -149,7 +150,7 @@ jobs:
     
     - name: Push new version number
       run: |
-        git add ${{ env.FILE_PATH }}
+        git add ${{ env.FILE_NAME }}
         git commit -m "Update version number"
         git push origin main
       env:
