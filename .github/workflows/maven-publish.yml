@@ -13,8 +13,7 @@ on:
   workflow_dispatch:
 
 env:
-  FILE_PATH: ".github/version.txt"
-  FILE_NAME: "version.txt"
+  FILE_PATH: "version.txt"
 
 jobs:
   update-version:
@@ -150,7 +149,7 @@ jobs:
     
     - name: Push new version number
       run: |
-        git add ${{ env.FILE_NAME }}
+        git add ${{ env.FILE_PATH }}
         git commit -m "Update version number"
         git push origin main
       env:
