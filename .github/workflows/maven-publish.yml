@@ -5,51 +5,11 @@ name: Maven Package
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
-
-env:
-  FILE_PATH: "version.txt"
+    tags:
+      - "*"
 
 jobs:
-  update-version:
-    runs-on: ubuntu-latest
-    steps:
-    
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Increment current version
-      run: |
-        current_version=$(cat $FILE_PATH)
-
-        if [[ -z "$current_version" ]]; then
-          echo "Current version empty. Setting to 1.0"
-          new_version="1.0"
-        else
-          major_version=$(echo "$current_version" | cut -d '.' -f 1)
-          minor_version=$(echo "$current_version" | cut -d '.' -f 2)
-
-          new_minor_version=$(echo "$minor_version + 1" | bc)
-
-          new_version="$major_version.$new_minor_version"
-        fi
-
-        echo "$new_version" > $FILE_PATH
-        echo "New Version: $new_version"
-    
-    - name: Upload new version number
-      uses: actions/upload-artifact@v3
-      with:
-        name: version-number
-        path: ${{ env.FILE_PATH }}
-
   build:
-    needs: update-version
     runs-on: ubuntu-latest
     steps:
 
@@ -62,15 +22,9 @@ jobs:
         server-id: github
         settings-path: ${{ github.workspace }}
     
-    - name: Get version number
-      uses: actions/download-artifact@v3
-      with:
-        name: version-number
-    
     - name: Set version number
       run: |
-        VERSION=$(cat version.txt)
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml -Dproject.version=${{ env.VERSION }}
@@ -96,15 +50,9 @@ jobs:
       with:
         name: customutils-jar
     
-    - name: Get version number
-      uses: actions/download-artifact@v3
-      with:
-        name: version-number
-    
     - name: Set version number
       run: |
-        VERSION=$(cat version.txt)
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
     - name: Create GitHub Release
       id: create_release
@@ -128,29 +76,3 @@ jobs:
         asset_path: customutils-${{ env.VERSION }}.jar
         asset_name: customutils-${{ env.VERSION }}.jar
         asset_content_type: application/java-archive
-  
-  write_version:
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Get version number
-      uses: actions/download-artifact@v3
-      with:
-        name: version-number
-
-    - name: Configure Git
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-    
-    - name: Push new version number
-      run: |
-        git add ${{ env.FILE_PATH }}
-        git commit -m "Update version number"
-        git push origin main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
