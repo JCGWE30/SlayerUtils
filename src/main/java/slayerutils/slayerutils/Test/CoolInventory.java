@@ -24,6 +24,7 @@ public class CoolInventory {
                 .splitLore("You have had this menu open for 0 seconds")
                 .type(Material.DIAMOND)
                 .amount(1)
+                .clickSound(null)
 
                 .clickAction((click) -> {
                     if(TimeUnit.MILLISECONDS.toSeconds(((new Date().getTime())-starttime))>=5){
