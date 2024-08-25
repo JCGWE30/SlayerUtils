@@ -37,10 +37,10 @@ public class CustomInventoryEvents implements Listener {
         if(slot==null) return;
         if(e.getClick().isRightClick()&&slot.rightclickset){
             slot.rightclick.onClick(e.getClick());
-            p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 1f, 2f);
+            slot.playClick(p);
         }else if(slot.clickset) {
             slot.click.onClick(e.getClick());
-            p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 1f, 2f);
+            slot.playClick(p);
         }
         if(!inv.isOpen())
             return;
