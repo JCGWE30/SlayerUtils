@@ -47,7 +47,7 @@ public class Slot {
         this.lore.add(lore);
         return this;
     }
-    private Slot setLore(List<String> lore){
+    protected Slot setLore(List<String> lore){
         this.lore=lore;
         return this;
     }

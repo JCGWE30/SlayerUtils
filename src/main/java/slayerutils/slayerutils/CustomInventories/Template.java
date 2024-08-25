@@ -4,14 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Template {
-    String id = "unknown";
     String name = "Inventory";
     int rows = 1;
+
     boolean background = true;
+
     boolean autoupdate = false;
+
     boolean clickupdate = false;
+
     List<Slot> slots = new ArrayList<>();
+
     InventoryClose closeAction;
+
+    InnerInventory innerInventory;
+    Slot innerInventoryBackground;
     public Template name(String name){
         this.name=name;
         return this;
@@ -38,6 +45,22 @@ public class Template {
     }
     public Template addSlot(Slot s){
         slots.add(s);
+        return this;
+    }
+
+    public Template setInnerInventory(InnerInventory inner, Slot backgroundSlot){
+        innerInventory = inner;
+        innerInventoryBackground = backgroundSlot;
+        return this;
+    }
+    public Template setInnerInventory(InnerInventory inner, CommonSlot backgroundSlot){
+        innerInventory = inner;
+        innerInventoryBackground = backgroundSlot.getSlot();
+        return this;
+    }
+    public Template setInnerInventory(InnerInventory inner){
+        innerInventory = inner;
+        innerInventoryBackground = null;
         return this;
     }
 }

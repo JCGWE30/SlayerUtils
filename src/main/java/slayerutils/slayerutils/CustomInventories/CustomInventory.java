@@ -129,18 +129,17 @@ public class CustomInventory {
                 pmeta.setDisplayName(" ");
                 pane.setItemMeta(pmeta);
                 for (int i = 0; i < inventory.getSize(); i++) {
+                    if(ci.innerInventory!=null){
+                        if(ci.innerInventory.inInner(i)){
+                            inventory.setItem(i, slotToItem(ci.innerInventoryBackground));
+                            continue;
+                        }
+                    }
                     inventory.setItem(i, pane);
                 }
             }
             ci.slots.forEach((slot) ->{
-                ItemStack item = new ItemStack(slot.type,slot.amount);
-                ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName("§r§f"+slot.name);
-                meta.setLore(slot.lore);
-                meta.addItemFlags(ItemFlag.values());
-                if(slot.glint)
-                    meta.addEnchant(Enchantment.PROTECTION,1,false);
-                item.setItemMeta(meta);
+                ItemStack item = slotToItem(slot);
                 inventory.setItem(slot.location,item);
             });
         }
@@ -169,6 +168,19 @@ public class CustomInventory {
             lore.add("§7"+sb.toString().trim());
         return lore;
     }
+
+    private static ItemStack slotToItem(Slot slot){
+        ItemStack item = new ItemStack(slot.type,slot.amount);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§r§f"+slot.name);
+        meta.setLore(slot.lore);
+        meta.addItemFlags(ItemFlag.values());
+        if(slot.glint)
+            meta.addEnchant(Enchantment.PROTECTION,1,false);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public static int getLocationOf(int x,int y){
         return (y*9)+x;
     }
