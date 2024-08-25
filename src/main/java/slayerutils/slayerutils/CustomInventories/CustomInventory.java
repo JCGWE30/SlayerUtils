@@ -96,7 +96,7 @@ public class CustomInventory {
                     meta.setLore(newslot.lore);
                     meta.addItemFlags(ItemFlag.values());
                     if(newslot.glint)
-                        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,1,false);
+                        meta.addEnchant(Enchantment.PROTECTION,1,false);
                     item.setItemMeta(meta);
                     setSlot(i,newslot);
                     int location = newslot.location == -1 ? i : newslot.location;
@@ -139,7 +139,7 @@ public class CustomInventory {
                 meta.setLore(slot.lore);
                 meta.addItemFlags(ItemFlag.values());
                 if(slot.glint)
-                    meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,1,false);
+                    meta.addEnchant(Enchantment.PROTECTION,1,false);
                 item.setItemMeta(meta);
                 inventory.setItem(slot.location,item);
             });
@@ -165,7 +165,7 @@ public class CustomInventory {
                 sb=new StringBuilder();
             }
         }
-        if(sb.length()==0)
+        if(sb.length()>0)
             lore.add("§7"+sb.toString().trim());
         return lore;
     }

@@ -37,7 +37,7 @@ public class CoolInventory {
                 })
 
                 .updateAction((slot) ->
-                        slot.lore(String.format("You have had this menu Open for %s seconds",TimeUnit.MILLISECONDS.toSeconds(((new Date().getTime())-starttime))))
+                        slot.splitLore(String.format("You have had this menu Open for %s seconds",TimeUnit.MILLISECONDS.toSeconds(((new Date().getTime())-starttime))))
                                 .amount(Math.max(1,(int)TimeUnit.MILLISECONDS.toSeconds(((new Date().getTime())-starttime)))))
         );
         starttime = new Date().getTime();
