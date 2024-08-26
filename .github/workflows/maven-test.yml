@@ -1,0 +1,22 @@
+name: Maven Package
+
+on:
+  push
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        server-id: github
+        settings-path: ${{ github.workspace }}
+    
+    - name: Test Package
+      run: mvn clean -B package --file pom.xml
