@@ -18,7 +18,7 @@ public class InvenUtils {
         URL urlObject;
         try{
             urlObject = new URL(url);
-        }catch (MalformedURLException ex) { throw new RuntimeException("Invalid Skin URL", ex)}
+        }catch (MalformedURLException ex) { throw new RuntimeException("Invalid Skin URL", ex);}
         textures.setSkin(urlObject);
         profile.setTextures(textures);
         return profile;
