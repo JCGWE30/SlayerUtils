@@ -9,6 +9,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import slayerutils.slayerutils.Slayerutils;
@@ -178,6 +179,11 @@ public class CustomInventory {
         if(slot.glint)
             meta.addEnchant(Enchantment.PROTECTION,1,false);
         item.setItemMeta(meta);
+        if(slot.skullData!=null){
+            SkullMeta skullMeta = ((SkullMeta) item.getItemMeta());
+            skullMeta.setOwnerProfile(slot.skullData);
+            item.setItemMeta(skullMeta);
+        }
         return item;
     }
 

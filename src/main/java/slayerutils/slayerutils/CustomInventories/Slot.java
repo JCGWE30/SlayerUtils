@@ -3,6 +3,8 @@ package slayerutils.slayerutils.CustomInventories;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
 import slayerutils.slayerutils.Utility.InvenUtils;
 
 import java.util.ArrayList;
@@ -17,7 +19,10 @@ public class Slot {
     int location = 0;
     String name = "Item";
     List<String> lore = new ArrayList<>();
+
     Material type = Material.IRON_BLOCK;
+    PlayerProfile skullData;
+
     int amount = 1;
 
     boolean glint = false;
@@ -57,6 +62,16 @@ public class Slot {
     }
     public Slot type(Material type){
         this.type=type;
+        return this;
+    }
+    public Slot skull(Player p){
+        this.type = Material.PLAYER_HEAD;
+        skullData = p.getPlayerProfile();
+        return this;
+    }
+    public Slot skull(String url){
+        this.type = Material.PLAYER_HEAD;
+        skullData = InvenUtils.getProfile(url);
         return this;
     }
     public Slot amount(int amount){
