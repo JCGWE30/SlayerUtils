@@ -91,14 +91,7 @@ public class CustomInventory {
             if(getSlot(i)!=null){
                 if(getSlot(i).update!=null) {
                     Slot newslot = getSlot(i).update.update(getSlot(i));
-                    ItemStack item = new ItemStack(newslot.type,newslot.amount);
-                    ItemMeta meta = item.getItemMeta();
-                    meta.setDisplayName("§r§f"+newslot.name);
-                    meta.setLore(newslot.lore);
-                    meta.addItemFlags(ItemFlag.values());
-                    if(newslot.glint)
-                        meta.addEnchant(Enchantment.PROTECTION,1,false);
-                    item.setItemMeta(meta);
+                    ItemStack item = slotToItem(newslot);
                     setSlot(i,newslot);
                     int location = newslot.location == -1 ? i : newslot.location;
                     viewer.getOpenInventory().getTopInventory().setItem(location,item);

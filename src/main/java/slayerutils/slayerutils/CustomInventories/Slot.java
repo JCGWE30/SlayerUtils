@@ -74,6 +74,14 @@ public class Slot {
         skullData = InvenUtils.getProfile(url);
         return this;
     }
+    private Slot setSkullData(PlayerProfile skullData){
+        this.skullData=skullData;
+        return this;
+    }
+    public Slot stripSkull(){
+        skullData=null;
+        return this;
+    }
     public Slot amount(int amount){
         this.amount=amount;
         return this;
@@ -136,6 +144,8 @@ public class Slot {
             slot.updateAction(update);
         if(clickSoundSet)
             slot.clickSound(clickSound,soundPitch,soundVolume);
+        if(skullData!=null)
+            slot.setSkullData(skullData);
         return slot;
     }
 }
