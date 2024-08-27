@@ -74,6 +74,10 @@ public class Slot {
         skullData = InvenUtils.getProfile(url);
         return this;
     }
+    public Slot stripSkull(){
+        skullData=null;
+        return this;
+    }
     public Slot amount(int amount){
         this.amount=amount;
         return this;
