@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class TestingAparatus implements Listener {
-    private static final String[] whitelist = {"Slayerutils"};
+    private static final String[] whitelist = {"Slayerutils","ProtocolLib"};
 
     protected static TestingAparatus instance;
 
